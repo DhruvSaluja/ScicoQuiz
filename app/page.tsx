@@ -1,101 +1,83 @@
-import Image from "next/image";
+'use client'
+import './globals.css'
+
+import React ,{ useState } from 'react';
+import MenuIcon from '@mui/icons-material/Menu';
+import CloseIcon from '@mui/icons-material/Close';
+
 
 export default function Home() {
-  return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              app/page.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+  
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+  return (
+    <div className="min-h-screen bg-[#2e2e30] grid-background relative ">
+      {/* Navbar */}
+      
+      
+      {/* Main Content */}
+      <main className="relative flex items-center main-bg-img justify-center border-b-2 border-white h-screen px-4 py-16 md:py-24">
+        <div className="max-w-6xl mx-auto text-center">
+          <h1 className="text-4xl md:text-7xl font-bold text-white mb-48 mt-20">
+            REGISTRATIONS STARTING SOON....
+          </h1>
         </div>
       </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+      <div className="min-h-screen px-4 py-16 md:px-8 mt-11">
+      <div className="max-w-6xl mx-auto">
+        {/* Main Title */}
+        <div className="flex mb-12">
+          <div className="text-[#FF6B6B] text-9xl font-bold opacity-20">
+            <div>A</div>
+            <div>B</div>
+            <div>O</div>
+            <div>U</div>
+            <div>T</div>
+          </div>
+          {/* <div className="text-[#FF6B6B] text-8xl font-bold opacity-20">
+            <div>A</div>
+            <div>B</div>
+            <div>O</div>
+            <div>U</div>
+            <div>T</div>
+          </div> */}
+          
+          {/* Main Content Section */}
+          <div className="flex-1 text-white ml-8">
+            <h1 className="text-4xl md:text-5xl font-bold mb-8">About ScicoQuiz</h1>
+            
+            <div className="space-y-6 text-lg">
+              <p>
+                Welcome to ScicoQuiz, your premier platform for testing and enhancing your scientific knowledge through engaging and challenging quizzes.
+              </p>
+
+              <h2 className="text-2xl font-semibold text-[#FF6B6B]">Our Mission</h2>
+              <p>
+                We aim to make learning science interactive, fun, and accessible to everyone. Through carefully crafted questions and comprehensive assessments, we help students and enthusiasts master complex scientific concepts.
+              </p>
+
+              <h2 className="text-2xl font-semibold text-[#FF6B6B]">What We Offer</h2>
+              <ul className="list-disc list-inside space-y-3 ml-4">
+                <li>Comprehensive question banks covering Physics, Chemistry, and Biology</li>
+                <li>Timed sections to improve your speed and accuracy</li>
+                <li>Detailed explanations for each answer</li>
+                <li>Progress tracking and performance analytics</li>
+                <li>Regular updates with new question sets</li>
+              </ul>
+
+              <h2 className="text-2xl font-semibold text-[#FF6B6B]">Why Choose Us</h2>
+              <p>
+                Our platform is designed by expert educators and scientists to ensure quality and accuracy in every question. We focus on conceptual understanding rather than mere memorization, helping you build a strong foundation in sciences.
+              </p>
+
+              <h2 className="text-2xl font-semibold text-[#FF6B6B]">Join Us</h2>
+              <p>
+                Whether you're preparing for competitive exams or simply want to challenge yourself, ScicoQuiz provides the perfect environment for your scientific journey. Register now to start your learning adventure!
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
     </div>
   );
 }

@@ -11,6 +11,11 @@ export default {
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
+        'coral': {
+          500: '#FF6B6B',},
+      },
+      backgroundImage: {
+        'grid-pattern': "url('/images/bg-grid.png')",
       },
     },
   },

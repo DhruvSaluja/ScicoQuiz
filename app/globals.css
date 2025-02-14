@@ -1,21 +1,88 @@
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 :root {
-  --background: #ffffff;
+  --background: #000000;
   --foreground: #171717;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
+    --background: #000000;
     --foreground: #ededed;
   }
 }
 
+*,root,body{
+
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 body {
   color: var(--foreground);
   background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: "Bebas Neue",Arial, Helvetica, sans-serif;
 }
+
+.bebas-neue-regular {
+  font-family: "Bebas Neue", serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+
+/* styles/globals.css */
+.grid-background {
+  background-color: #2e2e30; 
+  background-image: 
+    linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)),
+    linear-gradient(
+      90deg,
+      rgba(74, 74, 74, 0.8) 4px,
+      transparent 1px
+    ),
+    linear-gradient(
+      rgba(74, 74, 74, 0.8) 4px,
+      transparent 1px
+    );
+  background-size: 100% 100%, 50px 50px, 50px 50px;
+  background-position: 0 0, 0 0, 0 0;
+}
+
+.main-bg-img{
+  background-image: linear-gradient(
+    rgba(46, 46, 48, 0.7),
+    rgba(46, 46, 48, 0.7)
+  ), url('/images/home_main_svgg.svg');
+  background-size: cover;
+  background-position: center -20%;
+  background-repeat: no-repeat;
+  
+}
+
+/* Add these styles to your globals.css */
+.team-member-image {
+  
+  filter: grayscale(100%);
+  transition: all 0.3s ease-in-out;
+}
+
+.team-member-image:hover {
+  transform: scale(1.05);
+  filter: grayscale(0%);
+}
+
+.team-grid {
+  background: linear-gradient(
+    to bottom right,
+    rgba(255, 107, 107, 0.1),
+    transparent
+  );
+}
+
+
+
+

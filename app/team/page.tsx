@@ -16,7 +16,7 @@ const page = () => {
   
     return (
       <div className="min-h-screen px-4 py-16 md:px-8 bg-[#2e2e30] grid-background relative">
-        <div className="max-w-6xl mx-auto">
+        <div className="max-w-6xl mt-7 mx-auto">
           {/* Team Header */}
           <div className="text-center mb-16">
             <h1 className="text-5xl font-bold text-white mb-4">Our Team</h1>

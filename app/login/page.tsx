@@ -522,7 +522,7 @@ export default function Login() {
 
         if (authError) throw authError;
 
-        if (authData.user) {
+        if (!authError && authData.user) {
           const { error: profileError } = await supabase
             .from('Users')
             .insert([

@@ -2,12 +2,14 @@
 import './globals.css'
 
 import React ,{ useState } from 'react';
+import { useAuth } from '../context/AuthContext';
 import MenuIcon from '@mui/icons-material/Menu';
 import CloseIcon from '@mui/icons-material/Close';
-
+import Link from 'next/link';
+import Dashboard from '../components/Dashboard';
 
 export default function Home() {
-  
+  const { user } = useAuth();
 
   return (
     <div className="min-h-screen bg-[#2e2e30] grid-background relative ">
@@ -16,11 +18,44 @@ export default function Home() {
       
       {/* Main Content */}
       <main className="relative flex items-center main-bg-img justify-center border-b-2 border-white h-screen px-4 py-16 md:py-24">
-        <div className="max-w-6xl mx-auto text-center">
-          <h1 className="text-4xl md:text-7xl font-bold text-white mb-48 mt-20">
-            REGISTRATIONS STARTING SOON....
+        
+         {!user ? (<div className="max-w-6xl mx-auto text-center">
+          <h1 className="text-4xl md:text-8xl font-bold text-white mb-20 mt-20">
+            WELCOME TO SCIENCE ARENA....
           </h1>
-        </div>
+          <div className="mt-0 animate-fade-in-up">
+            <a 
+              href="/login" 
+              className="group relative inline-flex items-center justify-center px-8 py-4 text-lg font-bold text-white 
+                        bg-gradient-to-r from-coral-500 to-coral-600 rounded-full overflow-hidden transform 
+                        transition-all duration-300 ease-out hover:scale-105 hover:shadow-lg
+                        before:absolute before:inset-0 before:bg-gradient-to-r before:from-coral-600 
+                        before:to-coral-700 before:opacity-0 before:transition-opacity before:duration-300
+                        hover:before:opacity-100 "
+            >
+              <span className="relative z-10 flex font-sans items-center">
+                Register Now
+                <svg 
+                  className="ml-2 w-5 h-5 transform transition-transform duration-300 group-hover:translate-x-1" 
+                  fill="none" 
+                  stroke="currentColor" 
+                  viewBox="0 0 24 24"
+                >
+                  <path 
+                    strokeLinecap="round" 
+                    strokeLinejoin="round" 
+                    strokeWidth="2" 
+                    d="M13 7l5 5m0 0l-5 5m5-5H6"
+                  />
+                </svg>
+              </span>
+            </a>
+          </div>
+          </div>
+  ) : (<Dashboard/>)
+        }
+
+        
       </main>
       <div className="min-h-screen px-4 py-16 md:px-8 mt-11">
       <div className="max-w-6xl mx-auto">

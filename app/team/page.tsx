@@ -3,12 +3,12 @@ import React from 'react'
 const page = () => {
 
     const teamMembers = [
-      { name: "Dhruv Dua", role: "Founder & CEO", imgUrl: "/images/mayank_wangikar.jpg"},
+      { name: "Dhruv Dua", role: "Founder & CEO", imgUrl: "/images/dhruv_dua.jpg"},
       { name: "Dhruv Saluja", role: "Technical Lead" , imgUrl: "/images/dhruv_saluja.jpg"},
-      { name: "Dev Raj", role: "Content Director", imgUrl: "/images/mayank_wangikar.jpg" },
+      { name: "Dev Raj", role: "Content Director", imgUrl: "/images/dev_raj.jpg" },
       { name: "Het Jani", role: "Product Manager" , imgUrl: "/images/het_jani_resized2.jpg"},
-      { name: "Ankita", role: "Design Lead" , imgUrl: "/images/mayank_wangikar.jpg"},
-      { name: "Rishiraj Ghosh", role: "Development Lead" , imgUrl: "/images/mayank_wangikar.jpg"},
+      { name: "Ankita", role: "Design Lead" , imgUrl: "/images/ankita_hegde.jpg"},
+      { name: "Rishiraj Ghosh", role: "Development Lead" , imgUrl: "/images/rishiraj.jpg"},
       { name: "Pratham Shah", role: "Content Strategist", imgUrl: "/images/pratham.jpg"},
       { name: "Mayank Wangikar", role: "Operations Head", imgUrl: "/images/mayank_wangikar.jpg" },
      

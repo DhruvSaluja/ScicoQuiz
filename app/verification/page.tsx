@@ -2,7 +2,7 @@
 
 export default function Verification() {
   return (
-    <div className="min-h-screen bg-[#2e2e30] flex items-center justify-center px-4">
+    <div className="min-h-screen flex items-center justify-center bg-[#2e2e30] grid-background relative px-4">
       <div className="max-w-md w-full bg-gray-800 rounded-lg p-8 text-center">
         <h2 className="text-3xl font-bold text-white mb-6">
           Verify Your Email

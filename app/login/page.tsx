@@ -494,16 +494,63 @@ export default function Login() {
   const [isRegistering, setIsRegistering] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [formData, setFormData] = useState({
+  // const [formData, setFormData] = useState({
+  //   email: '',
+  //   password: '',
+  //   name: '',
+  //   schoolName: '',
+  //   phoneNo: '',
+  // });
+    // Separate state for registration form
+  const [registerFormData, setRegisterFormData] = useState({
     email: '',
     password: '',
+    confirmPassword: '',
     name: '',
+    state: '',
+    city: '',
+    address: '',
+    zip: '',
     schoolName: '',
     phoneNo: '',
+    alternatePno:'' ,
+    document: null as File | null,
   });
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+  // Separate state for login form
+  const [loginFormData, setLoginFormData] = useState({
+    email: '',
+    password: '',
+  });
+
+  const handleRegisterInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setRegisterFormData({ ...registerFormData, [e.target.name]: e.target.value });
+  };
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    const input = e.target as HTMLInputElement;
+    if (file) {
+      // Check file size (10MB = 10 * 1024 * 1024 bytes)
+      if (file.size > 10 * 1024 * 1024) {
+        alert('File size must be less than 10MB');
+        input.value = '';
+        return;
+      }
+      
+      // Check file type
+      if (file.type !== 'application/pdf') {
+        alert('Only PDF files are allowed');
+        input.value = '';
+        return;
+      }
+      
+      setRegisterFormData({ ...registerFormData, document: file });
+    }
+  };
+
+  const handleLoginInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setLoginFormData({ ...loginFormData, [e.target.name]: e.target.value });
   };
   const [showPassword, setShowPassword] = useState(false);
   const handleAuth = async (e: React.FormEvent) => {
@@ -511,26 +558,55 @@ export default function Login() {
     setLoading(true);
     setError(null);
 
-
-
     try {
       if (isRegistering) {
+        if (registerFormData.password !== registerFormData.confirmPassword) {
+          setError("Passwords do not match");
+          setLoading(false);
+          return;
+        }
         const { data: authData, error: authError } = await supabase.auth.signUp({
-          email: formData.email,
-          password: formData.password,
+          email: registerFormData.email,
+          password: registerFormData.password,
         });
 
         if (authError) throw authError;
 
         if (!authError && authData.user) {
+          let fileName = "";
+          if (registerFormData.document) {
+            const fileExt = registerFormData.document.name.split('.').pop();
+            fileName = `${authData.user.email}-${authData.user.id}.${fileExt}`;
+            
+            const { error: uploadError } = await supabase.storage
+              .from('documents-id-proof')
+              .upload(fileName, registerFormData.document);
+              
+            if (uploadError) throw uploadError;
+          }
+          const { data: publ } = supabase.storage
+            .from('documents-id-proof')
+            .getPublicUrl(fileName);
+          
+
           const { error: profileError } = await supabase
             .from('Users')
             .insert([
               {
-                email: formData.email,
-                name: formData.name,
-                schoolName: formData.schoolName,
-                phoneNo: formData.phoneNo,
+                email: registerFormData.email,
+                name: registerFormData.name,
+                state: registerFormData.state,
+                city: registerFormData.city,
+                address: registerFormData.address,
+                zipcode: registerFormData.zip,
+                schoolName: registerFormData.schoolName,
+                phoneNo: registerFormData.phoneNo,
+                alternatephoneNo: registerFormData.alternatePno,  
+          //       documentPath: registerFormData.document ? 
+          // `${authData.user.id}.${registerFormData.document.name.split('.').pop()}` : 
+          // null
+          documentPath: registerFormData.document ? 
+          publ.publicUrl : null
               },
             ]);
 
@@ -539,8 +615,8 @@ export default function Login() {
         router.push('/verification');
       } else {
         const { error: signInError } = await supabase.auth.signInWithPassword({
-          email: formData.email,
-          password: formData.password,
+          email: loginFormData.email,
+          password: loginFormData.password,
         });
 
         if (signInError) throw signInError;
@@ -550,6 +626,7 @@ export default function Login() {
    
     } catch (error: any) {
       setError(error.message);
+      alert(error.message);
     } finally {
       setLoading(false);
     }
@@ -559,9 +636,9 @@ export default function Login() {
       };
 
   return (
-    <div className="flex justify-center items-center h-screen  text-white min-h-screen bg-[#2e2e30] grid-background relative">
-      <div className="max-w-md w-full bg-gray-800 rounded-lg p-8">
-        <h2 className="text-3xl font-bold text-white text-center mb-6">
+    <div className={`flex justify-center items-center   text-white min-h-screen ${isRegistering? '':'bg-[#2e2e30]'} ${isRegistering? '':'grid-background'} relative`}>
+      <div className={`${isRegistering? 'max-w-7xl' : 'max-w-md'} w-full bg-gray-800 rounded-lg p-8 my-32`}>
+        <h2 className={`${isRegistering? 'text-6xl':'text-3xl'} font-bold text-white text-center mb-6`}>
           {isRegistering ? 'Register' : 'Login'}
         </h2>
         
@@ -575,9 +652,9 @@ export default function Login() {
           <input
             type="email"
             name="email"
-            placeholder="Email"
-            value={formData.email}
-            onChange={handleInputChange}
+            placeholder="Email*"
+            value={isRegistering? registerFormData.email : loginFormData.email}
+            onChange={isRegistering? handleRegisterInputChange : handleLoginInputChange}
             required
             className="w-full p-3 rounded bg-gray-700 text-white"
           />
@@ -596,9 +673,9 @@ export default function Login() {
             <input
               type={showPassword ? 'text' : 'password'} // Toggle password visibility
               name="password"
-              value={formData.password}
-              onChange={handleInputChange}
-              placeholder="Password"
+              value={isRegistering? registerFormData.password : loginFormData.password}
+              onChange={isRegistering? handleRegisterInputChange : handleLoginInputChange }
+              placeholder="Password*"
               required
               className="px-4 py-2 rounded-md bg-gray-700 font-sans text-white focus:outline-none focus:ring-2 focus:ring-coral-500 w-full"
             />
@@ -614,11 +691,56 @@ export default function Login() {
           {isRegistering && (
             <>
               <input
+                type="password"
+                name="confirmPassword"
+                placeholder="Confirm Password*"
+                value={registerFormData.confirmPassword}
+                onChange={handleRegisterInputChange}
+                required
+                className="w-full p-3 rounded bg-gray-700 text-white"
+              />
+              <input
                 type="text"
                 name="name"
-                placeholder="Full Name"
-                value={formData.name}
-                onChange={handleInputChange}
+                placeholder="Full Name*"
+                value={registerFormData.name}
+                onChange={handleRegisterInputChange}
+                required
+                className="w-full p-3 rounded bg-gray-700 text-white"
+              />
+              <input
+                type="text"
+                name="state"
+                placeholder="State*"
+                value={registerFormData.state}
+                onChange={handleRegisterInputChange}
+                required
+                className="w-full p-3 rounded bg-gray-700 text-white"
+              />
+              <input
+                type="text"
+                name="city"
+                placeholder="City*"
+                value={registerFormData.city}
+                onChange={handleRegisterInputChange}
+                required
+                className="w-full p-3 rounded bg-gray-700 text-white"
+              />
+              <input
+                type="text"
+                name="address"
+                placeholder="Address*"
+                value={registerFormData.address}
+                onChange={handleRegisterInputChange}
+                required
+                className="w-full p-3 rounded bg-gray-700 text-white"
+              />
+              <input
+                type="text"
+                name="zip"
+                placeholder="Zip Code*"
+                value={registerFormData.zip}
+                onChange={handleRegisterInputChange}
                 required
                 className="w-full p-3 rounded bg-gray-700 text-white"
               />
@@ -626,22 +748,44 @@ export default function Login() {
               <input
                 type="text"
                 name="schoolName"
-                placeholder="School Name"
-                value={formData.schoolName}
-                onChange={handleInputChange}
+                placeholder="School Name*"
+                value={registerFormData.schoolName}
+                onChange={handleRegisterInputChange}
                 required
                 className="w-full p-3 rounded bg-gray-700 text-white"
               />
               
               <input
-                type="tel"
+                type="text"
                 name="phoneNo"
-                placeholder="Phone Number"
-                value={formData.phoneNo}
-                onChange={handleInputChange}
+                placeholder="Phone Number*"
+                value={registerFormData.phoneNo}
+                onChange={handleRegisterInputChange}
                 required
                 className="w-full p-3 rounded bg-gray-700 text-white"
               />
+              <input
+                type="text"
+                name="alternatePno"
+                placeholder="Alternate Phone Number"
+                value={registerFormData.alternatePno}
+                onChange={handleRegisterInputChange}
+                className="w-full p-3 rounded bg-gray-700 text-white"
+              />
+              <div className="space-y-2">
+                <label className="block text-sm font-medium text-gray-300">
+                  ID Proof (PDF, max 10MB)
+                </label>
+                <input
+                  type="file"
+                  accept=".pdf"
+                  onChange={handleFileChange}
+                  className="w-full p-3 rounded bg-gray-700 text-white file:mr-4 file:py-2 
+                            file:px-4 file:rounded file:border-0 file:bg-coral-500 
+                            file:text-white hover:file:bg-coral-600"
+                  required
+                />
+              </div>
             </>
           )}
 
@@ -657,7 +801,32 @@ export default function Login() {
         <p className="mt-4 text-center text-gray-400">
           {isRegistering ? 'Already have an account? ' : "Don't have an account? "}
           <button
-            onClick={() => setIsRegistering(!isRegistering)}
+            onClick={() =>{ 
+              setIsRegistering(!isRegistering);
+              if (!isRegistering) {
+
+                setLoginFormData({
+                  email: '',
+                  password: ''
+                });
+              } else {
+                setRegisterFormData({
+                  email: '',
+                  password: '',
+                  confirmPassword: '',
+                  name: '',
+                  state: '',
+                  city: '',
+                  address: '',
+                  zip: '',
+                  schoolName: '',
+                  phoneNo: '',
+                  alternatePno:'' ,
+                  document: null ,
+                });
+              }
+            }}
+              
             className="text-coral-500 hover:underline"
           >
             {isRegistering ? 'Login' : 'Register'}

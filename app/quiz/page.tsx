@@ -14,28 +14,19 @@ interface Quiz {
 const quizzes: Quiz[] = [
   {
     id: 1,
-    name: 'Science Quiz Round 1',
-    date: '2024-03-25',
+    name: 'Demo Round ',
+    date: '2025-03-28',
     time: '10:00 AM',
-    duration: '60 minutes',
+    duration: '50 minutes',
     participants: 0,
     status: 'locked'
   },
   {
     id: 2,
-    name: 'Science Quiz Round 2',
-    date: '2024-04-01',
-    time: '2:00 PM',
-    duration: '45 minutes',
-    participants: 0,
-    status: 'locked'
-  },
-  {
-    id: 3,
     name: 'Final Round',
-    date: '2024-04-15',
-    time: '3:00 PM',
-    duration: '90 minutes',
+    date: '2025-03-30',
+    time: '10:00 PM',
+    duration: '150 minutes',
     participants: 0,
     status: 'locked'
   }

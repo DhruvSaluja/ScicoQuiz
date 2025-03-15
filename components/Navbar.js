@@ -282,39 +282,47 @@ export default function Navbar() {
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
 
+  const handleLogoutmobile = async () => {
+    try{setIsOpen(!isOpen);}catch(e){console.log(e)}
+    await supabase.auth.signOut();
+    router.push('/');
+  };
   const handleLogout = async () => {
     await supabase.auth.signOut();
     router.push('/');
   };
 
   return (
-    <nav className="flex fixed top-0 z-50 w-full mt-2 rounded-full justify-between items-center px-4 py-2 md:px-8 bg-white bg-opacity-10 backdrop-blur-lg">
+    <nav className={`flex fixed top-0 z-50 w-full ${isOpen? '': 'mt-2'} rounded-full justify-between items-center px-4 py-2 md:px-8 bg-white bg-opacity-10 backdrop-blur-lg`}>
       <div className="flex ml-9 items-center">
-        <img src="/images/logofinal.png" alt="Logo" className="h-14" />
-        <span className="text-coral-500 text-5xl font-bold ml-5">SCICOQUIZ</span>
+        
+      <a href="/"><img src="/images/logofinal.png" alt="Logo" className="h-14" /></a>
+        <a href="/"><span className="text-coral-500 text-5xl font-bold ml-3">INGENIUM</span>
+        </a>
       </div>
 
       <div className="hidden md:flex space-x-20 text-2xl mr-8 text-white items-center">
         <Link href="/" className="hover:text-coral-500 hover:underline">HOME</Link>
         <Link href="/about" className="hover:text-coral-500 hover:underline">ABOUT</Link>
         <Link href="/team" className="hover:text-coral-500 hover:underline">TEAM</Link>
-        <Link href="/contact" className="hover:text-coral-500 hover:underline">CONTACT</Link>
+        <Link href="/faq" className="hover:text-coral-500 hover:underline">FAQ's</Link>
+        {/* <Link href="/contact" className="hover:text-coral-500 hover:underline">CONTACT</Link> */}
         
         {user ? (
           <>
             <Link href="/profile" className="hover:text-coral-500 hover:underline">PROFILE</Link>
-            <button onClick={handleLogout} className="hover:text-coral-500 hover:underline">
+            <button onClick={handleLogout} className="py-2 px-4 rounded-2xl border-2 border-coral-500 hover:text-coral-500 hover:underline">
               LOGOUT
             </button>
           </>
         ) : (
-          <Link href="/login" className="hover:text-coral-500 hover:underline">LOGIN</Link>
+          <Link href="/login" className=" py-2 px-4 rounded-2xl border-2 border-coral-500 hover:text-coral-500 hover:underline">LOGIN</Link>
         )}
       </div>
 
-      <div className="md:hidden" onClick={() => setIsOpen(!isOpen)}>
+      <div className="md:hidden z-[60]" onClick={() => setIsOpen(!isOpen)}>
         {isOpen ? (
-          <CloseIcon className="h-6 w-6 text-white hover:text-coral-500" />
+          <CloseIcon className="h-6 w-6  text-white hover:text-coral-500" />
         ) : (
           <MenuIcon className="h-6 w-6 text-white hover:text-coral-500" />
         )}
@@ -322,21 +330,21 @@ export default function Navbar() {
 
       {/* Mobile Menu */}
       {isOpen && (
-        <div className="absolute top-16 right-0 w-full bg-gray-900 md:hidden">
-          <div className="flex flex-col items-center py-4">
-            <Link href="/" className="py-2 text-white hover:text-coral-500">HOME</Link>
-            <Link href="/about" className="py-2 text-white hover:text-coral-500">ABOUT</Link>
-            <Link href="/team" className="py-2 text-white hover:text-coral-500">TEAM</Link>
-            <Link href="/contact" className="py-2 text-white hover:text-coral-500">CONTACT</Link>
+        <div className="absolute top-0 right-0 w-full h-screen bg-gray-900 md:hidden">
+          <div className="flex flex-col mt-14 text-3xl items-center py-4">
+            <Link href="/" className="py-2 text-white  hover:text-coral-500" onClick={() => setIsOpen(!isOpen)}>HOME</Link>
+            <Link href="/about" className="py-2 text-white hover:text-coral-500" onClick={() => setIsOpen(!isOpen)}>ABOUT</Link>
+            <Link href="/team" className="py-2 text-white hover:text-coral-500" onClick={() => setIsOpen(!isOpen)}>TEAM</Link>
+            <Link href="/faq" className="py-2 text-white hover:text-coral-500" onClick={() => setIsOpen(!isOpen)}>FAQ's</Link>
             {user ? (
               <>
-                <Link href="/profile" className="py-2 text-white hover:text-coral-500">PROFILE</Link>
-                <button onClick={handleLogout} className="py-2 text-white hover:text-coral-500">
+                <Link href="/profile" className="py-2 text-white hover:text-coral-500" onClick={() => setIsOpen(!isOpen)}>PROFILE</Link>
+                <button onClick={handleLogoutmobile} className="py-2 px-4 text-white border-2 rounded-2xl border-coral-500 hover:text-coral-500">
                   LOGOUT
                 </button>
               </>
             ) : (
-              <Link href="/login" className="py-2 text-white hover:text-coral-500">LOGIN</Link>
+              <Link href="/login" className="py-2 px-4 rounded-2xl border-2 border-coral-500 text-white hover:text-coral-500" onClick={() => setIsOpen(!isOpen)}>LOGIN</Link>
             )}
           </div>
         </div>

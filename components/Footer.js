@@ -52,8 +52,9 @@ export default function Footer() {
         </div>
 
         {/* Copyright */}
-        <div className="mt-8 border-t border-gray-700 pt-8 text-center text-sm">
+        <div className="mt-8 border-t border-gray-700 pt-8 text-center text-lg">
           <p>© {new Date().getFullYear()} SciCo Quiz. All rights reserved.</p>
+          <p>Developer-<span className='hover:text-[#FF6B6B]'><a href='https://github.com/DhruvSaluja' target='_blank'>Dhruv Saluja</a></span></p>
         </div>
       </div>
     </footer>

@@ -58,8 +58,8 @@ export default function Dashboard() {
           <h2 className="text-2xl font-bold text-coral-500 mb-4">Your Stats</h2>
           <div className="space-y-2 text-white">
             <p>Quizzes Completed: 0</p>
-            <p>Average Score: N/A</p>
-            <p>Ranking: N/A</p>
+            <p>Score: 0</p>
+            <p>Ranking: 0</p>
           </div>
         </div>
       </div>

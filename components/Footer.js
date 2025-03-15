@@ -10,7 +10,7 @@ export default function Footer() {
             <h3 className="text-xl font-bold mb-4 text-coral-500">Quick Links</h3>
             <ul className="space-y-2">
               <li><Link href="/about" className="hover:text-coral-500">About Us</Link></li>
-              <li><Link href="/contact" className="hover:text-coral-500">Contact</Link></li>
+              {/* <li><Link href="/contact" className="hover:text-coral-500">Contact</Link></li> */}
               <li><Link href="/team" className="hover:text-coral-500">Our Team</Link></li>
             </ul>
           </div>
